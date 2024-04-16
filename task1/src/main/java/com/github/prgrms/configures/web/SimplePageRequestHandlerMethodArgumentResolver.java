@@ -36,7 +36,11 @@ public class SimplePageRequestHandlerMethodArgumentResolver implements HandlerMe
     String sizeString = webRequest.getParameter(sizeParameterName);
 
     // TODO 구현이 필요 합니다.
-    throw new UnsupportedOperationException("SimplePageRequest 인스턴스를 리턴하도록 구현 필요");
+    long offset = offsetString != null ? Long.parseLong(offsetString) : DEFAULT_OFFSET;
+    int size = sizeString != null ? Integer.parseInt(sizeString) : DEFAULT_SIZE;
+    return new SimplePageRequest(offset,size);
+    //throw new UnsupportedOperationException("SimplePageRequest 인스턴스를 리턴하도록 구현 필요");
+
   }
 
   public void setOffsetParameterName(String offsetParameterName) {
