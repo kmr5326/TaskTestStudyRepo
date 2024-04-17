@@ -2,7 +2,7 @@ package com.github.prgrms.orders;
 
 import java.time.LocalDateTime;
 
-public class Order {
+public class Orders {
     private final Long seq;
     private Long userId;
     private Long productId;
@@ -14,7 +14,11 @@ public class Order {
     private LocalDateTime rejectedAt;
     private final LocalDateTime createAt;
 
-    public Order(Long seq, Long userId, Long productId, Long reviewId, OrderState state, String requestMsg, String rejectMsg, LocalDateTime completedAt, LocalDateTime rejectedAt, LocalDateTime createAt) {
+    public Orders(){
+        this.seq=null;
+        this.createAt=null;
+    }
+    public Orders(Long seq, Long userId, Long productId, Long reviewId, OrderState state, String requestMsg, String rejectMsg, LocalDateTime completedAt, LocalDateTime rejectedAt, LocalDateTime createAt) {
         this.seq = seq;
         this.userId = userId;
         this.productId = productId;
@@ -132,8 +136,8 @@ public class Order {
             return this;
         }
 
-        public Order build(){
-            return new Order(
+        public Orders build(){
+            return new Orders(
                     seq,
                     userId,
                     productId,

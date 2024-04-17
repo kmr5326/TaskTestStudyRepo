@@ -80,13 +80,13 @@ public class GeneralExceptionHandler {
     return newResponse(e, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-  @ExceptionHandler({Exception.class,DuplicateReviewException.class})
+  @ExceptionHandler({DuplicateReviewException.class})
   public ResponseEntity<?> handleDuplicateReviewExceoption(Exception e){
     log.error("Duplicate review: {}",e.getMessage(),e);
     return newResponse(e,HttpStatus.BAD_REQUEST);
   }
 
-  @ExceptionHandler({Exception.class,NotCompletedOrderException.class})
+  @ExceptionHandler({NotCompletedOrderException.class})
   public ResponseEntity<?> handleNotCompletedOrderException(Exception e){
     log.error("NotCompletedOrderException: {}",e.getMessage(),e);
     return newResponse(e,HttpStatus.BAD_REQUEST);

@@ -1,7 +1,5 @@
 package com.github.prgrms.orders;
 
-import com.github.prgrms.products.Product;
-
 import java.time.LocalDateTime;
 
 import static org.springframework.beans.BeanUtils.copyProperties;
@@ -29,7 +27,7 @@ public class OrderDto {
         this.createAt = createAt;
     }
 
-    public OrderDto(Order order) {
+    public OrderDto(Orders order) {
         this(
                 order.getSeq(),
                 order.getProductId(),
@@ -43,7 +41,7 @@ public class OrderDto {
         );
     }
 
-    public OrderDto(Order order,ReviewDto reviewDto){
+    public OrderDto(Orders order, ReviewDto reviewDto){
         this(
                 order.getSeq(),
                 order.getProductId(),

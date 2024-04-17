@@ -1,5 +1,6 @@
 package com.github.prgrms.orders;
 
+import com.github.prgrms.configures.web.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,14 +18,14 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Order> findById(Long orderId) {
-        checkNotNull(orderId, "productId must be provided");
+    public Optional<Orders> findById(Long orderId) {
+        checkNotNull(orderId, "orderId must be provided");
 
         return orderRepository.findById(orderId);
     }
 
     @Transactional(readOnly = true)
-    public List<Order> findAll() {
-        return orderRepository.findAll();
+    public List<Orders> findAll(Pageable pageable) {
+        return orderRepository.findAll(pageable);
     }
 }

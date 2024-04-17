@@ -29,12 +29,13 @@ public class JdbcReviewRepository implements ReviewRepository{
 
     @Override
     public Optional<Review> findById(long id) {
-        List<User> results = jdbcTemplate.query(
-                "SELECT * FROM users WHERE seq=?",
-                mapper,
-                id
-        );
-        return ofNullable(results.isEmpty() ? null : results.get(0));
+//        List<User> results = jdbcTemplate.query(
+//                "SELECT * FROM users WHERE seq=?",
+//                mapper,
+//                id
+//        );
+//        return ofNullable(results.isEmpty() ? null : results.get(0));
+        return null;
     }
 
     @Override
@@ -45,26 +46,27 @@ public class JdbcReviewRepository implements ReviewRepository{
     @Override
     public Review save(Review review) {
         String sql="INSERT INTO reviews(user_seq, product_seq, content, create_at) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql,
-                review.getUser().getSeq(),
-                review.getProduct().getSeq(),
-                review.getContent(),
-                review.getCreateAt());
-        return review;
+//        jdbcTemplate.update(sql,
+//                review.getUser().getSeq(),
+//                review.getProduct().getSeq(),
+//                review.getContent(),
+//                review.getCreateAt());
+//        return review;
+        return null;
     }
 
     @Override
     public Optional<Review> findByProductId(long id) {
-        String sql="SELECT * FROM reivews"
+//        String sql="SELECT * FROM reivews"
         return Optional.empty();
     }
 
-    static RowMapper<Review> mapper = (rs, rowNum) ->
-            new Review(
-                    rs.getLong("seq"),
-                    rs.getObject("user")),
-                    rs.getObject("product"),
-                    rs.getString("content"),
-                    dateTimeOf(rs.getTimestamp("create_at"))
-            )
+//    static RowMapper<Review> mapper = (rs, rowNum) ->
+//            new Review(
+//                    rs.getLong("seq"),
+//                    rs.getObject("user")),
+//                    rs.getObject("product"),
+//                    rs.getString("content"),
+//                    dateTimeOf(rs.getTimestamp("create_at"))
+//            )
 }

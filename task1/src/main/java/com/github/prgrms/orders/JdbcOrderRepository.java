@@ -1,5 +1,6 @@
 package com.github.prgrms.orders;
 
+import com.github.prgrms.configures.web.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class JdbcOrderRepository implements OrderRepository{
+public class JdbcOrderRepository implements OrderRepository {
     private final JdbcTemplate jdbcTemplate;
 
     public JdbcOrderRepository(JdbcTemplate jdbcTemplate) {
@@ -15,8 +16,8 @@ public class JdbcOrderRepository implements OrderRepository{
     }
 
     @Override
-    public Optional<Order> findById(long id) {
-        List<Order> orders = jdbcTemplate.query(
+    public Optional<Orders> findById(long id) {
+        List<Orders> orders = jdbcTemplate.query(
                 "SELECT * FROM orders WHERE seq = ?",
                 new OrderRowMapper(),
                 id
@@ -25,7 +26,10 @@ public class JdbcOrderRepository implements OrderRepository{
     }
 
     @Override
-    public List<Order> findAll() {
-        return null;
+    public List<Orders> findAll(Pageable pageable) {
+        String sql = "SELECT * FROM orders LIMIT ? OFFSET ?";
+        return jdbcTemplate.query(sql, new Object[]{pageable.getSize(), pageable.getOffset()},
+                new OrderRowMapper());
+
     }
 }

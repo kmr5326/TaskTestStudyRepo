@@ -26,13 +26,13 @@ public class ReviewService {
 
     public ReviewDto createReview(ReviewRequest reviewRequest, Long userId, Long orderId) {
         Optional<User> user = userService.findById(userId);
-        Optional<Order>
-        Review review = new Review(user.get(),
-                product.get(),
-                reviewRequest.getContent(),
-                LocalDateTime.now());
+//        Optional<Order>
+//        Review review = new Review(user.get(),
+//                product.get(),
+//                reviewRequest.getContent(),
+//                LocalDateTime.now());
 
-        Review savedReview = reviewRepository.save(review);
-
+//        Review savedReview = reviewRepository.save(review);
+        return null;
     }
 }
