@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface OrderRepository {
     Optional<Orders> findById(long id);
     List<Orders> findAll(Pageable pageable);
+
+    void saveReview(Long id,Long reviewId);
 }

@@ -14,4 +14,11 @@ public class ReviewDto {
         this.content = content;
         this.createAt = createAt;
     }
+
+    public ReviewDto(Review review){
+        this.seq=review.getSeq();
+        this.productId= review.getProductId();
+        this.content=review.getContent();
+        this.createAt=review.getCreateAt();
+    }
 }

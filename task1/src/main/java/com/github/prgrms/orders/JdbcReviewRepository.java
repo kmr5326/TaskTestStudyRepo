@@ -7,8 +7,12 @@ import com.github.prgrms.users.User;
 import com.github.prgrms.users.UserService;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,13 +33,12 @@ public class JdbcReviewRepository implements ReviewRepository{
 
     @Override
     public Optional<Review> findById(long id) {
-//        List<User> results = jdbcTemplate.query(
-//                "SELECT * FROM users WHERE seq=?",
-//                mapper,
-//                id
-//        );
-//        return ofNullable(results.isEmpty() ? null : results.get(0));
-        return null;
+        List<Review> results = jdbcTemplate.query(
+                "SELECT * FROM reviews WHERE seq=?",
+                new ReviewRowMapper(),
+                id
+        );
+        return results.isEmpty()?Optional.empty():Optional.of(results.get(0));
     }
 
     @Override
@@ -44,15 +47,36 @@ public class JdbcReviewRepository implements ReviewRepository{
     }
 
     @Override
+    @Transactional
     public Review save(Review review) {
         String sql="INSERT INTO reviews(user_seq, product_seq, content, create_at) VALUES (?, ?, ?, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
 //        jdbcTemplate.update(sql,
-//                review.getUser().getSeq(),
-//                review.getProduct().getSeq(),
+//                review.getUserId(),
+//                review.getProductId(),
 //                review.getContent(),
-//                review.getCreateAt());
-//        return review;
-        return null;
+//                review.getCreateAt(),
+//                keyHolder);
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, new String[] { "seq" });
+            ps.setLong(1, review.getUserId());
+            ps.setLong(2, review.getProductId());
+            ps.setString(3, review.getContent());
+            ps.setObject(4, review.getCreateAt());
+            return ps;
+        }, keyHolder);
+        Review savedReview;
+        if (keyHolder.getKey() != null) {
+            Long generatedSeq = keyHolder.getKey().longValue();
+            savedReview=new Review(generatedSeq,
+                    review.getUserId(),
+                    review.getProductId(),
+                    review.getContent(),
+                    review.getCreateAt());
+        } else {
+            throw new IllegalStateException("Failed to retrieve generated key");
+        }
+        return savedReview;
     }
 
     @Override

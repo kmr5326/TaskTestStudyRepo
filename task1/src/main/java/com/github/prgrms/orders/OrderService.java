@@ -28,4 +28,8 @@ public class OrderService {
     public List<Orders> findAll(Pageable pageable) {
         return orderRepository.findAll(pageable);
     }
+
+    public void saveReview(Long id,Long reviewId){
+        orderRepository.saveReview(id,reviewId);
+    }
 }

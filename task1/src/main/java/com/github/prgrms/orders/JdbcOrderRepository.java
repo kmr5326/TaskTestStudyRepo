@@ -3,6 +3,7 @@ package com.github.prgrms.orders;
 import com.github.prgrms.configures.web.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,5 +32,11 @@ public class JdbcOrderRepository implements OrderRepository {
         return jdbcTemplate.query(sql, new Object[]{pageable.getSize(), pageable.getOffset()},
                 new OrderRowMapper());
 
+    }
+
+    @Transactional
+    public void saveReview(Long id,Long reviewId){
+        String sql="UPDATE orders SET review_seq=? WHERE seq= ?";
+        jdbcTemplate.update(sql, reviewId, id);
     }
 }

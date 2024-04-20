@@ -18,7 +18,7 @@ public class OrderRowMapper implements RowMapper<Orders> {
                 .rejectMsg(rs.getString("reject_msg"))
                 .completedAt(rs.getTimestamp("completed_at") != null ? rs.getTimestamp("completed_at").toLocalDateTime() : null)
                 .rejectedAt(rs.getTimestamp("rejected_at") != null ? rs.getTimestamp("rejected_at").toLocalDateTime() : null)
-                .completedAt(rs.getTimestamp("create_at").toLocalDateTime())
+                .createAt(rs.getTimestamp("create_at").toLocalDateTime())
                 .build();
         return order;
     }

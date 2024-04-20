@@ -54,4 +54,8 @@ public class OrderDto {
                 order.getCompletedAt()
         );
     }
+
+    public void setReview(ReviewDto review) {
+        this.review = review;
+    }
 }

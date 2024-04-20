@@ -71,6 +71,22 @@ public class Orders {
         return createAt;
     }
 
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "seq=" + seq +
+                ", userId=" + userId +
+                ", productId=" + productId +
+                ", reviewId=" + reviewId +
+                ", state=" + state +
+                ", requestMsg='" + requestMsg + '\'' +
+                ", rejectMsg='" + rejectMsg + '\'' +
+                ", completedAt=" + completedAt +
+                ", rejectedAt=" + rejectedAt +
+                ", createAt=" + createAt +
+                '}';
+    }
+
     static public class Builder{
         private Long seq;
         private Long userId;

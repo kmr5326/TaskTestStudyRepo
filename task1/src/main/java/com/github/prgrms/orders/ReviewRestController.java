@@ -2,6 +2,8 @@ package com.github.prgrms.orders;
 
 import com.github.prgrms.security.JwtAuthentication;
 import com.github.prgrms.utils.ApiUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,6 +18,8 @@ public class ReviewRestController {
     private final AuthenticationManager authenticationManager;
     private final ReviewService reviewService;
 
+    private final Logger log = LoggerFactory.getLogger(getClass());
+
     public ReviewRestController(AuthenticationManager authenticationManager, ReviewService reviewService) {
         this.authenticationManager = authenticationManager;
         this.reviewService = reviewService;
@@ -27,7 +31,7 @@ public class ReviewRestController {
             @PathVariable("id") Long orderId,
             @RequestBody ReviewRequest reviewRequest
     ) {
-
+        log.info("orderId: {}, content: {}",orderId,reviewRequest.getContent());
         ReviewDto reviewDto = reviewService.createReview(reviewRequest, authentication.id, orderId);
         return success(reviewDto);
     }
