@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,8 +42,14 @@ public class JdbcOrderRepository implements OrderRepository {
     }
 
     @Override
-    public void changeState(Long orderId) {
+    public void acceptState(Long orderId) {
         String sql="UPDATE orders SET state='ACCEPTED' WHERE seq=?";
         jdbcTemplate.update(sql,orderId);
+    }
+
+    @Override
+    public void rejectState(Long orderId,String rejectMsg) {
+        String sql="UPDATE orders SET state='REJECTED', reject_msg=?, rejected_at=? WHERE seq=?";
+        jdbcTemplate.update(sql,rejectMsg, LocalDateTime.now(),orderId);
     }
 }

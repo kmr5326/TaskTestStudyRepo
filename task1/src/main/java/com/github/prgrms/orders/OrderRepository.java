@@ -11,5 +11,7 @@ public interface OrderRepository {
 
     void saveReview(Long id,Long reviewId);
 
-    void changeState(Long orderId);
+    void acceptState(Long orderId);
+
+    void rejectState(Long orderId, String rejectMsg);
 }

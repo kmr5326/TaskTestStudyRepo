@@ -39,7 +39,19 @@ public class OrderService {
         if(orders.isPresent()){
             if(orders.get().getState()!=OrderState.REQUESTED)return Boolean.FALSE;
             else{
-                orderRepository.changeState(orderId);
+                orderRepository.acceptState(orderId);
+                return Boolean.TRUE;
+            }
+        }
+        else throw new NotFoundException("Could not found order for " + orderId);
+    }
+
+    public Boolean reject(Long orderId, OrderRejectRequest orderRejectRequest){
+        Optional<Orders> orders=orderRepository.findById(orderId);
+        if(orders.isPresent()){
+            if(orders.get().getState()!=OrderState.REQUESTED)return Boolean.FALSE;
+            else{
+                orderRepository.rejectState(orderId,orderRejectRequest.getMessage());
                 return Boolean.TRUE;
             }
         }

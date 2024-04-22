@@ -63,9 +63,9 @@ public class OrderRestController {
         return success(orderService.accept(orderId));
     }
 
-//    @PostMapping("/{id}/reject")
-//    public ApiResult<Boolean> reject(@PathVariable("id") Long orderId,
-//                                     @RequestBody OrderRejectRequest orderRejectRequest){
-//        return success(orderService.accept(orderId));
-//    }
+    @PostMapping("/{id}/reject")
+    public ApiResult<Boolean> reject(@PathVariable("id") Long orderId,
+                                     @RequestBody OrderRejectRequest orderRejectRequest){
+        return success(orderService.reject(orderId,orderRejectRequest));
+    }
 }

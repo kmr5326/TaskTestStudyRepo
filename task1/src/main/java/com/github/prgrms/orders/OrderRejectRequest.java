@@ -6,6 +6,10 @@ public class OrderRejectRequest {
     public OrderRejectRequest() {
     }
 
+    public String getMessage() {
+        return message;
+    }
+
     public OrderRejectRequest(String message) {
         this.message = message;
     }
