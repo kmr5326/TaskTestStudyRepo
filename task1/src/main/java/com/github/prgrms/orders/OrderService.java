@@ -1,6 +1,7 @@
 package com.github.prgrms.orders;
 
 import com.github.prgrms.configures.web.Pageable;
+import com.github.prgrms.errors.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,5 +32,17 @@ public class OrderService {
 
     public void saveReview(Long id,Long reviewId){
         orderRepository.saveReview(id,reviewId);
+    }
+
+    public Boolean accept(Long orderId){
+        Optional<Orders> orders=orderRepository.findById(orderId);
+        if(orders.isPresent()){
+            if(orders.get().getState()!=OrderState.REQUESTED)return Boolean.FALSE;
+            else{
+                orderRepository.changeState(orderId);
+                return Boolean.TRUE;
+            }
+        }
+        else throw new NotFoundException("Could not found order for " + orderId);
     }
 }

@@ -39,4 +39,10 @@ public class JdbcOrderRepository implements OrderRepository {
         String sql="UPDATE orders SET review_seq=? WHERE seq= ?";
         jdbcTemplate.update(sql, reviewId, id);
     }
+
+    @Override
+    public void changeState(Long orderId) {
+        String sql="UPDATE orders SET state='ACCEPTED' WHERE seq=?";
+        jdbcTemplate.update(sql,orderId);
+    }
 }

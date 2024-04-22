@@ -10,4 +10,6 @@ public interface OrderRepository {
     List<Orders> findAll(Pageable pageable);
 
     void saveReview(Long id,Long reviewId);
+
+    void changeState(Long orderId);
 }

@@ -5,10 +5,7 @@ import com.github.prgrms.errors.NotFoundException;
 import com.github.prgrms.products.ProductDto;
 import com.github.prgrms.utils.ApiUtils;
 import com.github.prgrms.utils.ApiUtils.ApiResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,4 +58,14 @@ public class OrderRestController {
         else throw new NotFoundException("Could not found order for " + orderId);
     }
 
+    @PostMapping("/{id}/accept")
+    public ApiResult<Boolean> accept(@PathVariable("id") Long orderId){
+        return success(orderService.accept(orderId));
+    }
+
+//    @PostMapping("/{id}/reject")
+//    public ApiResult<Boolean> reject(@PathVariable("id") Long orderId,
+//                                     @RequestBody OrderRejectRequest orderRejectRequest){
+//        return success(orderService.accept(orderId));
+//    }
 }
